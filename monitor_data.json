@@ -1,6 +1,6 @@
 {
-  "timestamp": 1785691806.009974,
-  "timestamp_iso": "2026-08-03 01:30:06",
+  "timestamp": 1785692104.1527019,
+  "timestamp_iso": "2026-08-03 01:35:04",
   "agent": {
     "model": "deepseek-v4-pro",
     "provider": "DeepSeek",
@@ -49,12 +49,14 @@
       "status": "active",
       "name": "hermes-monitor-refresh",
       "schedule": "*/5 * * * *",
-      "next_run": "2026-08-03T01:35:00+08:00"
+      "next_run": "2026-08-03T01:40:00+08:00",
+      "last_run": "2026-08-03T01:30:14.786090+08:00 ",
+      "last_status": "ok"
     }
   ],
   "session_stats": {
-    "Total sessions": "72",
-    "Total messages": "1382",
+    "Total sessions": "73",
+    "Total messages": "1388",
     "cli": "1 sessions",
     "telegram": "5 sessions",
     "Database size": "15.9 MB"
@@ -62,11 +64,11 @@
   "recent_sessions": [
     "Title                            Preview                                  Last Active   ID",
     "──────────────────────────────────────────────────────────────────────────────────────────────────────────────",
-    "—                                [IMPORTANT: You are running as a sched   just now      cron_5aa33ec725c7_20260803_013000",
+    "—                                [IMPORTANT: You are running as a sched   just now      cron_5aa33ec725c7_20260803_013501",
+    "hermes-monitor-refresh · Aug 0   [IMPORTANT: You are running as a sched   4m ago        cron_5aa33ec725c7_20260803_013000",
     "quant-weekly-report · Aug 01 1   [IMPORTANT: You are running as a sched   yesterday     cron_30ce10724351_20260801_140008",
     "quant-daily-backtest · Jul 31    [IMPORTANT: You are running as a sched   2d ago        cron_80879fea463f_20260731_213020",
-    "quant-daily-signals · Jul 31 2   [IMPORTANT: You are running as a sched   2d ago        cron_2a03406860e4_20260731_211517",
-    "quant-daily-fetch · Jul 31 21:   [IMPORTANT: You are running as a sched   2d ago        cron_bc2a398005b5_20260731_210015"
+    "quant-daily-signals · Jul 31 2   [IMPORTANT: You are running as a sched   2d ago        cron_2a03406860e4_20260731_211517"
   ],
   "processes": [],
   "system": {

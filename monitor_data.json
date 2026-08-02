@@ -1,0 +1,70 @@
+{
+  "timestamp": 1785691700.9455428,
+  "timestamp_iso": "2026-08-03 01:28:20",
+  "agent": {
+    "model": "deepseek-v4-pro",
+    "provider": "DeepSeek",
+    "jobs_active": 4,
+    "sessions_active": 1,
+    "gateway": true
+  },
+  "cron_jobs": [
+    {
+      "status": "active",
+      "name": "quant-daily-fetch",
+      "schedule": "0 21 * * 1-5",
+      "next_run": "2026-08-03T21:00:00+08:00",
+      "workdir": "/Users/jc/us-stock-quant-workspace",
+      "last_run": "2026-07-31T21:01:55.823150+08:00 ",
+      "last_status": "ok"
+    },
+    {
+      "status": "active",
+      "name": "quant-daily-signals",
+      "schedule": "15 21 * * 1-5",
+      "next_run": "2026-08-03T21:15:00+08:00",
+      "workdir": "/Users/jc/us-stock-quant-workspace",
+      "last_run": "2026-07-31T21:15:31.630179+08:00 ",
+      "last_status": "ok"
+    },
+    {
+      "status": "active",
+      "name": "quant-daily-backtest",
+      "schedule": "30 21 * * 1-5",
+      "next_run": "2026-08-03T21:30:00+08:00",
+      "workdir": "/Users/jc/us-stock-quant-workspace",
+      "last_run": "2026-07-31T21:31:01.685571+08:00 ",
+      "last_status": "ok"
+    },
+    {
+      "status": "active",
+      "name": "quant-weekly-report",
+      "schedule": "0 14 * * 6",
+      "next_run": "2026-08-08T14:00:00+08:00",
+      "workdir": "/Users/jc/us-stock-quant-workspace",
+      "last_run": "2026-08-01T14:03:30.950120+08:00 ",
+      "last_status": "ok"
+    }
+  ],
+  "session_stats": {
+    "Total sessions": "71",
+    "Total messages": "1362",
+    "cli": "1 sessions",
+    "telegram": "5 sessions",
+    "Database size": "15.9 MB"
+  },
+  "recent_sessions": [
+    "Title                            Preview                                  Last Active   ID",
+    "──────────────────────────────────────────────────────────────────────────────────────────────────────────────",
+    "quant-weekly-report · Aug 01 1   [IMPORTANT: You are running as a sched   yesterday     cron_30ce10724351_20260801_140008",
+    "quant-daily-backtest · Jul 31    [IMPORTANT: You are running as a sched   2d ago        cron_80879fea463f_20260731_213020",
+    "quant-daily-signals · Jul 31 2   [IMPORTANT: You are running as a sched   2d ago        cron_2a03406860e4_20260731_211517",
+    "quant-daily-fetch · Jul 31 21:   [IMPORTANT: You are running as a sched   2d ago        cron_bc2a398005b5_20260731_210015",
+    "quant-daily-backtest · Jul 30    [IMPORTANT: You are running as a sched   3d ago        cron_80879fea463f_20260730_213033"
+  ],
+  "processes": [],
+  "system": {
+    "python": "Python 3.9.6",
+    "hermes": "Hermes Agent v0.18.0 (2026.7.1) · upstream 9d7c2d45\nProject: /Users/jc/.hermes/hermes-agent\nPython: 3.11.15\nOpenAI SDK: 2.24.0\nUpdate available: 5443 commits behind — run 'hermes update'"
+  }
+}

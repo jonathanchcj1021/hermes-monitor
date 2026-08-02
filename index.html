@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermes Agent Monitor</title>
+<style>
+  :root {
+    --bg: #0a0a0f; --card: #111118; --border: #1e1e2e;
+    --text: #e0e0e0; --text2: #8888aa;
+    --green: #2ecc71; --red: #e74c3c; --yellow: #f1c40f;
+    --blue: #3498db; --purple: #9b59b6; --cyan: #00bcd4; --orange: #e67e22;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Mono", "JetBrains Mono", monospace;
+    background: var(--bg); color: var(--text); min-height: 100vh;
+  }
+  .header {
+    background: var(--card); border-bottom: 1px solid var(--border);
+    padding: 14px 24px; display: flex; justify-content: space-between;
+    align-items: center; position: sticky; top: 0; z-index: 100;
+  }
+  .header h1 { font-size: 1.15rem; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+  .pulse { width: 10px; height: 10px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  .header .time { font-size: 0.75rem; color: var(--text2); }
+  .stale-badge {
+    font-size: 0.72rem; padding: 3px 10px; border-radius: 4px;
+    background: rgba(231,76,60,0.15); color: var(--red);
+  }
+  main { max-width: 1400px; margin: 0 auto; padding: 18px; }
+  .quick-stats { display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+  .qstat {
+    flex:1; min-width: 130px; background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 14px; text-align: center;
+  }
+  .qstat .num { font-size: 1.6rem; font-weight: 700; }
+  .qstat .lbl { font-size: 0.68rem; color: var(--text2); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; padding: 16px;
+  }
+  .card h2 { font-size: 0.85rem; color: var(--text2); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; }
+  .card.full { grid-column: 1/-1; }
+  .stat-row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.03); font-size: 0.82rem; }
+  .val.green { color: var(--green); }
+  .val.red { color: var(--red); }
+  .val.yellow { color: var(--yellow); }
+  .val.blue { color: var(--blue); }
+  .val.purple { color: var(--purple); }
+  .val.cyan { color: var(--cyan); }
+  .badge {
+    display: inline-block; padding: 2px 7px; border-radius: 10px;
+    font-size: 0.68rem; font-weight: 600;
+  }
+  .badge-ok { background: rgba(46,204,113,0.15); color: var(--green); }
+  .badge-warn { background: rgba(241,196,15,0.15); color: var(--yellow); }
+  .badge-err { background: rgba(231,76,60,0.15); color: var(--red); }
+  .badge-info { background: rgba(52,152,219,0.15); color: var(--blue); }
+  .cron-job { padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
+  .cron-job:last-child { border-bottom: none; }
+  .cron-name { font-weight: 600; font-size: 0.82rem; }
+  .cron-meta { font-size: 0.7rem; color: var(--text2); margin-top: 1px; }
+  .loading { text-align: center; padding: 30px; color: var(--text2); font-size: 0.9rem; }
+  .empty { text-align: center; padding: 20px; color: var(--text2); font-style: italic; font-size: 0.82rem; }
+  .error-banner {
+    background: rgba(231,76,60,0.1); border: 1px solid rgba(231,76,60,0.3);
+    border-radius: 8px; padding: 12px; margin-bottom: 14px;
+    font-size: 0.82rem; color: var(--red); display: none;
+  }
+  .refresh-bar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 0; font-size: 0.7rem; color: var(--text2);
+  }
+  .process-list { font-size: 0.78rem; max-height: 200px; overflow-y: auto; }
+  .process-list div { padding: 2px 0; }
+  .footer { text-align: center; padding: 20px; color: #444; font-size: 0.7rem; }
+  @media (max-width: 768px) {
+    .grid { grid-template-columns: 1fr; }
+    .quick-stats .qstat { min-width: 100px; }
+  }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1><span class="pulse" id="pulse"></span>Hermes Agent Monitor</h1>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <span id="stale-warning" class="stale-badge" style="display:none;">⚠️ Data stale</span>
+    <span class="time" id="clock">--</span>
+  </div>
+</div>
+<main>
+  <div class="error-banner" id="error-banner">❌ Failed to load data. Retrying...</div>
+
+  <!-- Quick Stats -->
+  <div class="quick-stats">
+    <div class="qstat"><div class="num green" id="qs-model">--</div><div class="lbl">Model</div></div>
+    <div class="qstat"><div class="num blue" id="qs-jobs">--</div><div class="lbl">Cron Jobs</div></div>
+    <div class="qstat"><div class="num purple" id="qs-sessions">--</div><div class="lbl">Sessions</div></div>
+    <div class="qstat"><div class="num" id="qs-gateway" style="color:var(--cyan)">--</div><div class="lbl">Gateway</div></div>
+    <div class="qstat"><div class="num" id="qs-processes" style="color:var(--orange)">--</div><div class="lbl">Processes</div></div>
+  </div>
+
+  <div class="refresh-bar">
+    <span>Auto-refresh: every 30s</span>
+    <span>Last updated: <span id="last-updated">--</span></span>
+  </div>
+
+  <div class="grid">
+    <!-- Agent Status -->
+    <div class="card">
+      <h2>🤖 Agent</h2>
+      <div id="agent-status"><div class="loading">Loading...</div></div>
+    </div>
+
+    <!-- System -->
+    <div class="card">
+      <h2>💻 System</h2>
+      <div id="system-info"><div class="loading">Loading...</div></div>
+    </div>
+
+    <!-- Cron Jobs -->
+    <div class="card full">
+      <h2>⏰ Cron Jobs</h2>
+      <div id="cron-jobs"><div class="loading">Loading...</div></div>
+    </div>
+
+    <!-- Sessions -->
+    <div class="card">
+      <h2>📋 Session Stats</h2>
+      <div id="session-stats"><div class="loading">Loading...</div></div>
+    </div>
+
+    <!-- Recent Sessions -->
+    <div class="card">
+      <h2>🕐 Recent Sessions</h2>
+      <div id="recent-sessions"><div class="loading">Loading...</div></div>
+    </div>
+
+    <!-- Processes -->
+    <div class="card full">
+      <h2>⚙️ Background Processes</h2>
+      <div id="processes"><div class="loading">Loading...</div></div>
+    </div>
+  </div>
+  <div class="footer">Hermes Agent Monitor • Auto-refresh every 30s</div>
+</main>
+
+<script>
+const DATA_URL = 'monitor_data.json';
+let autoRefresh;
+
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+async function loadData() {
+  try {
+    // Cache-bust to avoid stale cache
+    const resp = await fetch(DATA_URL + '?t=' + Date.now());
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const data = await resp.json();
+
+    document.getElementById('error-banner').style.display = 'none';
+    renderAll(data);
+
+    // Check staleness (> 10 min old = stale)
+    const age = (Date.now()/1000) - (data.timestamp || 0);
+    const staleBadge = document.getElementById('stale-warning');
+    if (age > 600) {
+      staleBadge.style.display = 'inline';
+      staleBadge.textContent = '⚠️ Data stale (' + Math.round(age/60) + 'm)';
+    } else {
+      staleBadge.style.display = 'none';
+    }
+
+  } catch(e) {
+    console.error('Load error:', e);
+    document.getElementById('error-banner').style.display = 'block';
+  }
+}
+
+function renderAll(d) {
+  if (!d) return;
+
+  // Quick stats
+  const a = d.agent || {};
+  document.getElementById('qs-model').textContent = a.model || '--';
+  document.getElementById('qs-jobs').textContent = a.jobs_active ?? '--';
+  document.getElementById('qs-sessions').textContent = a.sessions_active ?? '--';
+  document.getElementById('qs-gateway').textContent = a.gateway ? 'ON' : 'OFF';
+  document.getElementById('qs-gateway').style.color = a.gateway ? 'var(--green)' : 'var(--red)';
+  document.getElementById('qs-processes').textContent = (d.processes || []).length;
+
+  // Timestamp
+  document.getElementById('last-updated').textContent = d.timestamp_iso || '--';
+  document.getElementById('clock').textContent = d.timestamp_iso || '--';
+
+  // Agent panel
+  document.getElementById('agent-status').innerHTML = `
+    <div class="stat-row"><span>Model</span><span class="val blue">${esc(a.model)}</span></div>
+    <div class="stat-row"><span>Provider</span><span class="val">${esc(a.provider)}</span></div>
+    <div class="stat-row"><span>Active Sessions</span><span class="val purple">${a.sessions_active}</span></div>
+    <div class="stat-row"><span>Jobs Active</span><span class="val yellow">${a.jobs_active}</span></div>
+    <div class="stat-row"><span>Gateway</span><span class="val ${a.gateway?'green':'red'}">${a.gateway?'<span class="badge badge-ok">ONLINE</span>':'<span class="badge badge-err">OFFLINE</span>'}</span></div>
+  `;
+
+  // System panel
+  const s = d.system || {};
+  document.getElementById('system-info').innerHTML = `
+    <div class="stat-row"><span>Python</span><span class="val">${esc(s.python)}</span></div>
+    <div class="stat-row"><span>Hermes</span><span class="val blue">${esc(s.hermes)}</span></div>
+    <div class="stat-row"><span>Data Age</span><span class="val ${(Date.now()/1000 - d.timestamp) < 600 ? 'green' : 'yellow'}">${Math.round((Date.now()/1000 - d.timestamp)/60)} min ago</span></div>
+  `;
+
+  // Cron jobs
+  const jobs = d.cron_jobs || [];
+  if (jobs.length === 0) {
+    document.getElementById('cron-jobs').innerHTML = '<div class="empty">No cron jobs</div>';
+  } else {
+    document.getElementById('cron-jobs').innerHTML = jobs.map(j => `
+      <div class="cron-job">
+        <div class="cron-name">
+          <span class="badge ${j.status==='active'?'badge-ok':'badge-warn'}">${j.status||'?'}</span>
+          ${esc(j.name||'Unnamed')}
+        </div>
+        <div class="cron-meta">
+          ⏱ ${esc(j.schedule||'--')} &nbsp;|&nbsp;
+          📅 Next: ${esc(j.next_run||'--')} &nbsp;|&nbsp;
+          📋 Last: ${esc(j.last_run||'--')}
+          <span class="badge ${j.last_status==='ok'?'badge-ok':j.last_status==='error'?'badge-err':'badge-info'}">${j.last_status||'?'}</span>
+        </div>
+        ${j.workdir?`<div class="cron-meta">📁 ${esc(j.workdir)}</div>`:''}
+      </div>
+    `).join('');
+  }
+
+  // Session stats
+  const st = d.session_stats || {};
+  const stEntries = Object.entries(st);
+  if (stEntries.length === 0) {
+    document.getElementById('session-stats').innerHTML = '<div class="empty">No data</div>';
+  } else {
+    document.getElementById('session-stats').innerHTML = stEntries.map(([k,v]) => `
+      <div class="stat-row"><span>${esc(k)}</span><span class="val">${esc(v)}</span></div>
+    `).join('');
+  }
+
+  // Recent sessions
+  const rs = d.recent_sessions || [];
+  if (rs.length === 0) {
+    document.getElementById('recent-sessions').innerHTML = '<div class="empty">No recent sessions</div>';
+  } else {
+    document.getElementById('recent-sessions').innerHTML = rs.map(session => `
+      <div class="stat-row"><span>${esc(session)}</span></div>
+    `).join('');
+  }
+
+  // Processes
+  const procs = d.processes || [];
+  if (procs.length === 0) {
+    document.getElementById('processes').innerHTML = '<div class="empty">No background processes</div>';
+  } else {
+    document.getElementById('processes').innerHTML = '<div class="process-list">' + 
+      procs.map(p => `<div>${esc(p)}</div>`).join('') + '</div>';
+  }
+}
+
+// Start
+loadData();
+autoRefresh = setInterval(loadData, 30000);  // Refresh every 30s
+</script>
+</body>
+</html>

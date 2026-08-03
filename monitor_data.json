@@ -1,6 +1,6 @@
 {
-  "timestamp": 1785724511.200141,
-  "timestamp_iso": "2026-08-03 10:35:11",
+  "timestamp": 1785724811.517472,
+  "timestamp_iso": "2026-08-03 10:40:11",
   "agent": {
     "model": "deepseek-v4-pro",
     "provider": "DeepSeek",
@@ -49,14 +49,14 @@
       "status": "active",
       "name": "hermes-monitor-refresh",
       "schedule": "*/5 * * * *",
-      "next_run": "2026-08-03T10:40:00+08:00",
-      "last_run": "2026-08-03T10:31:01.085751+08:00 ",
+      "next_run": "2026-08-03T10:45:00+08:00",
+      "last_run": "2026-08-03T10:35:22.232915+08:00 ",
       "last_status": "ok"
     }
   ],
   "session_stats": {
-    "Total sessions": "173",
-    "Total messages": "2000",
+    "Total sessions": "174",
+    "Total messages": "2006",
     "cli": "1 sessions",
     "telegram": "5 sessions",
     "Database size": "18.8 MB"
@@ -64,11 +64,11 @@
   "recent_sessions": [
     "Title                            Preview                                  Last Active   ID",
     "──────────────────────────────────────────────────────────────────────────────────────────────────────────────",
-    "—                                [IMPORTANT: You are running as a sched   just now      cron_5aa33ec725c7_20260803_103508",
-    "hermes-monitor-refresh · Aug 0   [IMPORTANT: You are running as a sched   4m ago        cron_5aa33ec725c7_20260803_103007",
-    "hermes-monitor-refresh · Aug 0   [IMPORTANT: You are running as a sched   9m ago        cron_5aa33ec725c7_20260803_102506",
-    "hermes-monitor-refresh · Aug 0   [IMPORTANT: You are running as a sched   12m ago       cron_5aa33ec725c7_20260803_102006",
-    "hermes-monitor-refresh · Aug 0   [IMPORTANT: You are running as a sched   16m ago       cron_5aa33ec725c7_20260803_101505"
+    "—                                [IMPORTANT: You are running as a sched   just now      cron_5aa33ec725c7_20260803_104008",
+    "hermes-monitor-refresh · Aug 0   [IMPORTANT: You are running as a sched   4m ago        cron_5aa33ec725c7_20260803_103508",
+    "hermes-monitor-refresh · Aug 0   [IMPORTANT: You are running as a sched   9m ago        cron_5aa33ec725c7_20260803_103007",
+    "hermes-monitor-refresh · Aug 0   [IMPORTANT: You are running as a sched   14m ago       cron_5aa33ec725c7_20260803_102506",
+    "hermes-monitor-refresh · Aug 0   [IMPORTANT: You are running as a sched   17m ago       cron_5aa33ec725c7_20260803_102006"
   ],
   "processes": [],
   "system": {

@@ -1,6 +1,6 @@
 {
-  "timestamp": 1785730523.825064,
-  "timestamp_iso": "2026-08-03 12:15:23",
+  "timestamp": 1786863931.4224079,
+  "timestamp_iso": "2026-08-16 15:05:31",
   "agent": {
     "model": "deepseek-v4-pro",
     "provider": "DeepSeek",
@@ -13,66 +13,66 @@
       "status": "active",
       "name": "quant-daily-fetch",
       "schedule": "0 21 * * 1-5",
-      "next_run": "2026-08-03T21:00:00+08:00",
+      "next_run": "2026-08-17T21:00:00+08:00",
       "workdir": "/Users/jc/us-stock-quant-workspace",
-      "last_run": "2026-07-31T21:01:55.823150+08:00 ",
-      "last_status": "ok"
+      "last_run": "2026-08-14T21:00:48.430799+08:00  error: RuntimeError: HTTP 402: Insufficient",
+      "last_status": "Balance"
     },
     {
       "status": "active",
       "name": "quant-daily-signals",
       "schedule": "15 21 * * 1-5",
-      "next_run": "2026-08-03T21:15:00+08:00",
+      "next_run": "2026-08-17T21:15:00+08:00",
       "workdir": "/Users/jc/us-stock-quant-workspace",
-      "last_run": "2026-07-31T21:15:31.630179+08:00 ",
-      "last_status": "ok"
+      "last_run": "2026-08-14T21:15:49.018154+08:00  error: RuntimeError: HTTP 402: Insufficient",
+      "last_status": "Balance"
     },
     {
       "status": "active",
       "name": "quant-daily-backtest",
       "schedule": "30 21 * * 1-5",
-      "next_run": "2026-08-03T21:30:00+08:00",
+      "next_run": "2026-08-17T21:30:00+08:00",
       "workdir": "/Users/jc/us-stock-quant-workspace",
-      "last_run": "2026-07-31T21:31:01.685571+08:00 ",
-      "last_status": "ok"
+      "last_run": "2026-08-14T21:30:48.853551+08:00  error: RuntimeError: HTTP 402: Insufficient",
+      "last_status": "Balance"
     },
     {
       "status": "active",
       "name": "quant-weekly-report",
       "schedule": "0 14 * * 6",
-      "next_run": "2026-08-08T14:00:00+08:00",
+      "next_run": "2026-08-22T14:00:00+08:00",
       "workdir": "/Users/jc/us-stock-quant-workspace",
-      "last_run": "2026-08-01T14:03:30.950120+08:00 ",
-      "last_status": "ok"
+      "last_run": "2026-08-15T14:00:02.791354+08:00  error: RuntimeError: HTTP 402: Insufficient",
+      "last_status": "Balance"
     },
     {
       "status": "active",
       "name": "hermes-monitor-refresh",
       "schedule": "*/5 * * * *",
-      "next_run": "2026-08-03T12:20:00+08:00",
-      "last_run": "2026-08-03T12:10:31.273518+08:00 ",
-      "last_status": "ok"
+      "next_run": "2026-08-16T15:10:00+08:00",
+      "last_run": "2026-08-16T15:00:28.378376+08:00  error: RuntimeError: HTTP 402: Insufficient",
+      "last_status": "Balance"
     }
   ],
   "session_stats": {
-    "Total sessions": "193",
-    "Total messages": "2128",
+    "Total sessions": "4003",
+    "Total messages": "5943",
     "cli": "1 sessions",
     "telegram": "5 sessions",
-    "Database size": "19.6 MB"
+    "Database size": "118.9 MB"
   },
   "recent_sessions": [
     "Title                            Preview                                  Last Active   ID",
     "──────────────────────────────────────────────────────────────────────────────────────────────────────────────",
-    "—                                [IMPORTANT: You are running as a sched   just now      cron_5aa33ec725c7_20260803_121520",
-    "hermes-monitor-refresh · Aug 0   [IMPORTANT: You are running as a sched   4m ago        cron_5aa33ec725c7_20260803_121020",
-    "hermes-monitor-refresh · Aug 0   [IMPORTANT: You are running as a sched   8m ago        cron_5aa33ec725c7_20260803_120519",
-    "hermes-monitor-refresh · Aug 0   [IMPORTANT: You are running as a sched   12m ago       cron_5aa33ec725c7_20260803_120018",
-    "hermes-monitor-refresh · Aug 0   [IMPORTANT: You are running as a sched   19m ago       cron_5aa33ec725c7_20260803_115518"
+    "—                                [IMPORTANT: You are running as a sched   just now      cron_5aa33ec725c7_20260816_150527",
+    "hermes-monitor-refresh · Aug 1   [IMPORTANT: You are running as a sched   5m ago        cron_5aa33ec725c7_20260816_150027",
+    "hermes-monitor-refresh · Aug 1   [IMPORTANT: You are running as a sched   10m ago       cron_5aa33ec725c7_20260816_145527",
+    "hermes-monitor-refresh · Aug 1   [IMPORTANT: You are running as a sched   15m ago       cron_5aa33ec725c7_20260816_145027",
+    "hermes-monitor-refresh · Aug 1   [IMPORTANT: You are running as a sched   20m ago       cron_5aa33ec725c7_20260816_144526"
   ],
   "processes": [],
   "system": {
     "python": "Python 3.9.6",
-    "hermes": "Hermes Agent v0.18.0 (2026.7.1) · upstream 7598bc6c\nProject: /Users/jc/.hermes/hermes-agent\nPython: 3.11.15\nOpenAI SDK: 2.24.0\nUpdate available: 5552 commits behind — run 'hermes update'"
+    "hermes": "Hermes Agent v0.18.0 (2026.7.1) · upstream 9b9dd6ee\nProject: /Users/jc/.hermes/hermes-agent\nPython: 3.11.15\nOpenAI SDK: 2.24.0\nUpdate available: 8237 commits behind — run 'hermes update'"
   }
 }

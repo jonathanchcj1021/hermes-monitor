@@ -1,6 +1,6 @@
 {
-  "timestamp": 1786971319.0735612,
-  "timestamp_iso": "2026-08-17 20:55:19",
+  "timestamp": 1786971803.400404,
+  "timestamp_iso": "2026-08-17 21:03:23",
   "agent": {
     "model": "deepseek-v4-pro",
     "provider": "DeepSeek",
@@ -13,10 +13,10 @@
       "status": "active",
       "name": "quant-daily-fetch",
       "schedule": "0 21 * * 1-5",
-      "next_run": "2026-08-17T21:00:00+08:00",
+      "next_run": "2026-08-18T21:00:00+08:00",
       "workdir": "/Users/jc/us-stock-quant-workspace",
-      "last_run": "2026-08-14T21:00:48.430799+08:00  error: RuntimeError: HTTP 402: Insufficient",
-      "last_status": "Balance"
+      "last_run": "2026-08-17T21:01:58.962842+08:00 ",
+      "last_status": "ok"
     },
     {
       "status": "active",
@@ -49,26 +49,26 @@
       "status": "active",
       "name": "hermes-monitor-refresh",
       "schedule": "*/5 * * * *",
-      "next_run": "2026-08-17T21:00:00+08:00",
-      "last_run": "2026-08-17T20:50:28.005891+08:00 ",
+      "next_run": "2026-08-17T21:05:00+08:00",
+      "last_run": "2026-08-17T20:55:26.857206+08:00 ",
       "last_status": "ok"
     }
   ],
   "session_stats": {
-    "Total sessions": "4356",
-    "Total messages": "8272",
+    "Total sessions": "4358",
+    "Total messages": "8284",
     "cli": "1 sessions",
     "telegram": "5 sessions",
-    "Database size": "136.4 MB"
+    "Database size": "136.7 MB"
   },
   "recent_sessions": [
     "Title                            Preview                                  Last Active   ID",
     "──────────────────────────────────────────────────────────────────────────────────────────────────────────────",
-    "—                                [IMPORTANT: You are running as a sched   just now      cron_5aa33ec725c7_20260817_205516",
-    "hermes-monitor-refresh · Aug 1   [IMPORTANT: You are running as a sched   4m ago        cron_5aa33ec725c7_20260817_205015",
-    "hermes-monitor-refresh · Aug 1   [IMPORTANT: You are running as a sched   9m ago        cron_5aa33ec725c7_20260817_204515",
-    "hermes-monitor-refresh · Aug 1   [IMPORTANT: You are running as a sched   14m ago       cron_5aa33ec725c7_20260817_204014",
-    "hermes-monitor-refresh · Aug 1   [IMPORTANT: You are running as a sched   19m ago       cron_5aa33ec725c7_20260817_203513"
+    "—                                [IMPORTANT: You are running as a sched   just now      cron_5aa33ec725c7_20260817_210017",
+    "quant-daily-fetch · Aug 17 21:   [IMPORTANT: You are running as a sched   1m ago        cron_bc2a398005b5_20260817_210017",
+    "hermes-monitor-refresh · Aug 1   [IMPORTANT: You are running as a sched   7m ago        cron_5aa33ec725c7_20260817_205516",
+    "hermes-monitor-refresh · Aug 1   [IMPORTANT: You are running as a sched   12m ago       cron_5aa33ec725c7_20260817_205015",
+    "hermes-monitor-refresh · Aug 1   [IMPORTANT: You are running as a sched   17m ago       cron_5aa33ec725c7_20260817_204515"
   ],
   "processes": [],
   "system": {
